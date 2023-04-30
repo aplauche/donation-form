@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field';
 import Countdown from './components/Countdown';
 import ProgressIndicator from './components/ProgressIndicator';
+import Toaster from './components/Toaster';
 
 
 function App() {
 
   const goal = 5000
-
   const inputField = useRef()
 
   const [dollarsDonated, setDollarsDonated] = useState(0)
@@ -17,15 +17,15 @@ function App() {
 
   const percent = (dollarsDonated / goal) * 100
 
+  const [toasts, setToasts] = useState([])
+
   const handleFormSubmit = (e) => {
     e.preventDefault()
 
     if(dollarInput >= 5){
-      setDonations(donations => donations + 1)
-
-      console.log(dollarInput)
-  
+      setDonations(donations => donations + 1)  
       setDollarsDonated(val => val + parseFloat(dollarInput))
+      setToasts(toasts => [...toasts, {type: "success", message: 'Thanks for your donation!'}])
       setDollarInput(5)
     } else {
       alert('You must enter more')
@@ -60,11 +60,15 @@ function App() {
   }, [dollarInput])
 
 
+
+
   return (
     <>
-      <main className='min-h-screen w-full bg-neutral-100 flex items-center justify-center'>
+      <main className='min-h-screen w-full bg-slate-100 flex items-center justify-center '>
 
-        <section className='max-w-screen-sm px-4 py-32'>
+        <Toaster toasts={toasts} updateToasts={setToasts} />
+
+        <section className='max-w-[550px] px-4 py-32'>
 
           <div className="bg-slate-500 text-white w-full px-3 py-2 rounded-md -my-[4px]">
               ${Math.max(goal - dollarsDonated, 0).toFixed(2)} Still needed to fund this project!
@@ -73,20 +77,14 @@ function App() {
             <div style={{left: Math.min(percent, 100) + '%'}} className="progress-indicator-triangle absolute top-0 -translate-x-[50%] transition-all duration-1000"></div>
           </div>
 
-
-          <div className='relative bg-white border-neutral-300 rounded-lg p-8'>
-
+          <div className='relative border border-slate-200 bg-white rounded-lg p-8'>
 
             <ProgressIndicator progress={dollarsDonated} goal={goal} />
 
-
-
             <h1 className='text-3xl font-bold mb-4'>Time is running out to fund this project!</h1>
 
-
-
             {donations > 0 ? (
-              <p className='mb-4'>Join the {donations} other donor{donations > 1 && 's'} who {donations > 1 ? "have" : "has"} already contributed the project.</p>
+              <p className='mb-4'>Join the <strong>{donations}</strong> other donor{donations > 1 && 's'} who {donations > 1 ? "have" : "has"} already contributed the project.</p>
             ) : (
               <p className='mb-4'>Be the first to support the project and get the ball rolling!</p>
             )}
@@ -95,7 +93,7 @@ function App() {
             <Countdown deadline={new Date(new Date().getTime()+(4*24*60*60*1000))}/>
 
             <form onSubmit={handleFormSubmit} className="flex items-center flex-wrap pt-4 gap-4">
-              <div className='w-100 sm:w-auto flex-grow relative mb-10 sm:mb-0'>
+              <div className='w-100 sm:w-auto flex-grow relative'>
                 <label htmlFor="donate-input" className='sr-only'>Donation Amount ($)</label>
                 <CurrencyInput
                   id="donate-input"

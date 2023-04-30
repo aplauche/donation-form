@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+
+      fontFamily: {
+        "heading": "'Poppins', sans-serif",
+        "body": "'IBM Plex Sans', sans-serif"
+      },
+
       colors: {
         ocean: {
           100: '#F4F7FF',
