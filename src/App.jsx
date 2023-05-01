@@ -1,64 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import CurrencyInput from 'react-currency-input-field';
+import useStore from '../store/useStore';
 import Countdown from './components/Countdown';
-import ProgressIndicator from './components/ProgressIndicator';
+import Form from './components/Form';
+import ProgressBar from './components/ProgressBar';
 import Toaster from './components/Toaster';
 
 
 function App() {
 
-  const goal = 5000
-  const inputField = useRef()
-
-  const [dollarsDonated, setDollarsDonated] = useState(0)
-  const [donations, setDonations] = useState(0)
-  const [dollarInput, setDollarInput] = useState(5)
-  const [error, setError] = useState(false)
+  const goal = useStore((state) => state.goal)
+  const donations = useStore((state) => state.donations)
+  const dollarsDonated = useStore((state) => state.dollarsDonated)
 
   const percent = (dollarsDonated / goal) * 100
-
-  const [toasts, setToasts] = useState([])
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault()
-
-    if(dollarInput >= 5){
-      setDonations(donations => donations + 1)  
-      setDollarsDonated(val => val + parseFloat(dollarInput))
-      setToasts(toasts => [...toasts, {type: "success", message: 'Thanks for your donation!'}])
-      setDollarInput(5)
-    } else {
-      alert('You must enter more')
-      setDollarInput(5)
-      inputField.current.focus()
-    }
-  }
-
-  useEffect(() => {
-
-    let timer = null
-
-    const validate = () => {
-      if(!dollarInput){
-        setError('Please enter a value')
-      } else if(dollarInput < 5){
-        setError('Please enter a minimum donation of $5.00')
-      } 
-    }
-
-    clearTimeout(timer)
-    timer = setTimeout(validate, 850)
-
-    if(dollarInput >= 5){
-      setError(false)
-    }
-
-    return () => {
-      clearTimeout(timer)
-    }
-
-  }, [dollarInput])
-
 
 
 
@@ -66,75 +20,46 @@ function App() {
     <>
       <main className='min-h-screen w-full bg-slate-100 flex items-center justify-center '>
 
-        <Toaster toasts={toasts} updateToasts={setToasts} />
+        <Toaster />
 
         <section className='max-w-[550px] px-4 py-32'>
 
-          <div className="bg-slate-500 text-white w-full px-3 py-2 rounded-md -my-[4px]">
-              ${Math.max(goal - dollarsDonated, 0).toFixed(2)} Still needed to fund this project!
-          </div>
-          <div className='relative h-[16px] w-full overflow-hidden'>
-            <div style={{left: Math.min(percent, 100) + '%'}} className="progress-indicator-triangle absolute top-0 -translate-x-[50%] transition-all duration-1000"></div>
-          </div>
+          {dollarsDonated >= goal ? (
+            <img src="/flags.svg" alt="Hooray!" className='w-2/3 mx-auto'/>
+          ) : (
+            <>
+              <div className="bg-slate-500 text-white w-full px-3 py-2 rounded-md -my-[4px]">
+                ${Math.max(goal - dollarsDonated, 0).toFixed(2)} Still needed to fund this project!
+              </div>
+              <div className='relative h-[16px] w-full overflow-hidden'>
+                <div style={{left: Math.min(percent, 100) + '%'}} className="progress-indicator-triangle absolute top-0 -translate-x-[50%] transition-all duration-1000"></div>
+              </div>
+            </>
+          )}
 
-          <div className='relative border border-slate-200 bg-white rounded-lg p-8'>
+          <div className='relative border border-slate-200 bg-white rounded-lg p-8 px-12'>
 
-            <ProgressIndicator progress={dollarsDonated} goal={goal} />
+            <ProgressBar percent={percent} />
 
-            <h1 className='text-3xl font-bold mb-4'>Time is running out to fund this project!</h1>
+            <h1 className='text-3xl font-bold mb-6'>{dollarsDonated >= goal ? "We met our goal!" : "Time is running out to fund this project!"}</h1>
 
-            {donations > 0 ? (
-              <p className='mb-4'>Join the <strong>{donations}</strong> other donor{donations > 1 && 's'} who {donations > 1 ? "have" : "has"} already contributed the project.</p>
+            {dollarsDonated >= goal ? (
+                <p className='mb-6 text-slate-400'>
+                  Thanks for helping us get this project <strong className='text-slate-600'>{percent.toFixed(0)}%</strong> funded! There's still time to donate and keep the momentum up.
+                </p>
             ) : (
-              <p className='mb-4'>Be the first to support the project and get the ball rolling!</p>
+              donations > 0 ? (
+                <p className='mb-6 text-slate-400'>Join the <strong className='text-slate-600'>{donations}</strong> other donor{donations > 1 && 's'} who {donations > 1 ? "have" : "has"} already contributed the project.</p>
+              ) : (
+                <p className='mb-6 text-slate-400'>Be the <strong className='text-slate-600'>first</strong> to support the project and get the ball rolling!</p>
+              )
             )}
 
-            {/* For demo purposes countdown is set to 4 days in the future instead of the actual date */}
+
+            {/* For demo purposes countdown is set to 4 days in the future instead of the actual date - you could instead pass "May 12, 2023" for instance */}
             <Countdown deadline={new Date(new Date().getTime()+(4*24*60*60*1000))}/>
 
-            <form onSubmit={handleFormSubmit} className="flex items-center flex-wrap pt-4 gap-4">
-              <div className='w-100 sm:w-auto flex-grow relative'>
-                <label htmlFor="donate-input" className='sr-only'>Donation Amount ($)</label>
-                <CurrencyInput
-                  id="donate-input"
-                  name="donation"
-                  ref={inputField}
-                  placeholder="$5.00"
-                  prefix="$"
-                  value={dollarInput}
-                  decimalScale={2}
-                  onValueChange={(value) => setDollarInput(value)}
-                  min={5}
-                />  
-                {/* {error && (
-                  <div className='absolute w-full -bottom-2 translate-y-full left-[50%] -translate-x-[50%] p-1 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
-                    {error}
-                  </div>
-                )}  */}
-              </div>         
-              <button className='button-primary' type='submit' disabled={error}>
-                Give Now
-              </button>
-            </form> 
-
-            {error && (
-              <div className='absolute w-full -bottom-4 translate-y-full left-[50%] -translate-x-[50%] p-2 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
-                {error}
-              </div>
-            )}
-
-            {/* {error && (
-              <div className='fixed w-auto top-4 left-[50%] -translate-x-[50%] p-2 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
-                {error}
-              </div>
-            )} */}
-
-            {/* <form onSubmit={handleFormSubmit} className="flex items-center py-8 gap-4">
-              <input className='flex-grow border border-neutral-300' type="number" min="5" step="0.01" max="10000" inputmode="numeric" value={dollarInput} onChange={(e) => setDollarInput(e.target.value)}/>
-              <button type='submit'>
-                Give Now
-              </button>
-            </form> */}
+            <Form />
 
           </div>
 

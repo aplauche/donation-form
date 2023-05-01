@@ -1,8 +1,6 @@
 
 
-export default function ProgressIndicator({progress, goal}){
-
-  const percent = (progress / goal) * 100
+export default function ProgressBar({percent}){
 
   return (
     <>
