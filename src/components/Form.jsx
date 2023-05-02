@@ -15,9 +15,15 @@ export default function Form(){
   const [dollarInput, setDollarInput] = useState("5.00")
   const [error, setError] = useState(false)
 
-  // const validate = () => {
-
-  // }
+  const validate = (submitted=false) => {
+    if(!dollarInput){
+      setError('Please enter a value')
+      if(submitted) dispatchToast("error", `❌ Please enter a value`)
+    } else if(dollarInput < 5){
+      setError('Please enter a minimum donation of $5.00')
+      if(submitted) dispatchToast("error", `❌ Please enter a minimum donation of $5.00`)
+    } 
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
@@ -26,7 +32,7 @@ export default function Form(){
       donate(parseFloat(dollarInput))
       setDollarInput("5.00")
     } else {
-      dispatchToast("error", '❌ An error occured with your submission')
+      validate(true)
       setDollarInput("5.00")
       inputField.current.focus()
     }
@@ -35,14 +41,6 @@ export default function Form(){
   useEffect(() => {
 
     let timer = null
-
-    const validate = () => {
-      if(!dollarInput){
-        setError('Please enter a value')
-      } else if(dollarInput < 5){
-        setError('Please enter a minimum donation of $5.00')
-      } 
-    }
 
     clearTimeout(timer)
     timer = setTimeout(validate, 850)

@@ -14,10 +14,10 @@ export default function Countdown({deadline = new Date(new Date().getTime()+(4*2
   const calculateTimeRemaining = () => {
     const time = Date.parse(deadline) - Date.now();
 
-    setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
-    setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
-    setMinutes(Math.floor((time / 1000 / 60) % 60));
-    setSeconds(Math.floor((time / 1000) % 60));
+    setDays(Math.max(Math.floor(time / (1000 * 60 * 60 * 24)), 0));
+    setHours(Math.max(Math.floor((time / (1000 * 60 * 60)) % 24), 0));
+    setMinutes(Math.max(Math.floor((time / 1000 / 60) % 60), 0));
+    setSeconds(Math.max(Math.floor((time / 1000) % 60), 0));
   };
 
   useEffect(() => {
