@@ -15,7 +15,7 @@ const useStore = create((set) => ({
   })),
   popToasts: () => set(state => {
     const updated = Array.from(state.toasts)
-    updated.shift()
+    updated.pop()
     return { toasts: updated } }
   )
 

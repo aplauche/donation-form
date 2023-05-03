@@ -18,7 +18,7 @@ export default function Form(){
   const validate = (submitted=false) => {
     if(!dollarInput){
       setError('Please enter a value')
-      if(submitted) dispatchToast("error", `❌ Please enter a value`)
+      if(submitted) dispatchToast("error", `❌ Please enter a minimum donation of $5.00`)
     } else if(dollarInput < 5){
       setError('Please enter a minimum donation of $5.00')
       if(submitted) dispatchToast("error", `❌ Please enter a minimum donation of $5.00`)
@@ -33,7 +33,7 @@ export default function Form(){
       setDollarInput("5.00")
     } else {
       validate(true)
-      setDollarInput("5.00")
+      //setDollarInput("5.00")
       inputField.current.focus()
     }
   }
@@ -58,7 +58,8 @@ export default function Form(){
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="flex items-center flex-wrap pt-4 gap-4">
+
+            <form onSubmit={handleFormSubmit} className="flex items-center flex-wrap pt-4 gap-2 mb-2">
               <div className='w-100 sm:w-auto flex-grow relative'>
                 <label htmlFor="donate-input" className='sr-only'>Donation Amount ($)</label>
                 <CurrencyInput
@@ -82,13 +83,22 @@ export default function Form(){
                 Give Now
               </button>
             </form> 
+            <div className={`${error ? 'bg-strawberry-100 border-strawberry-600' : 'bg-ocean-100  border-ocean-500 hidden'} border-l-[3px] px-2 py-1`}>
+              Please enter a minimum of $5.00 to make a donation
+            </div>
 
+            {/* {error && (
+              <div className='relative w-full p-1 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
+                {error}
+              </div>
+            )} */}
 
+{/* 
             {error && (
               <div className='absolute w-full -bottom-4 translate-y-full left-[50%] -translate-x-[50%] p-2 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
                 {error}
               </div>
-            )}
+            )} */}
 
 
             {/* <form onSubmit={handleFormSubmit} className="flex items-center py-8 gap-4">

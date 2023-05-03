@@ -9,6 +9,9 @@
   h1,h2,h3 {
     @apply font-heading font-bold;
   }
+  p {
+    font-size: 1.2rem;
+  }
 }
 
 @layer components {
@@ -20,7 +23,7 @@
     @apply inline-block rounded-sm p-2 px-4 bg-ocean-500 text-white border border-ocean-500 hover:bg-ocean-600 transition-colors;
 
     &[disabled]{
-      @apply bg-slate-300 border-slate-300;
+      @apply bg-slate-300 border-slate-300 cursor-not-allowed;
     }
   }
 

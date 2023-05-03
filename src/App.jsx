@@ -3,8 +3,8 @@ import useStore from '../store/useStore';
 import Countdown from './components/Countdown';
 import Form from './components/Form';
 import ProgressBar from './components/ProgressBar';
-import ProgressCounter from './components/ProgressCounter';
 import Toaster from './components/Toaster';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 
 function App() {
@@ -19,15 +19,21 @@ function App() {
 
   return (
     <>
-      <main className='min-h-screen w-full bg-slate-100 flex items-center justify-center '>
+      <main className='min-h-screen w-full bg-slate-100 flex items-center justify-center overflow-x-hidden'>
 
         <Toaster />
 
         <section className='max-w-[550px] px-4 py-32'>
 
-          <ProgressCounter />
-
           <div className='relative border border-slate-200 bg-white rounded-lg p-8 px-12'>
+
+            {/* <Player className='sm:absolute sm:-right-20 top-0 sm:-translate-y-1/2 w-[300px] h-[300px] z-20' src="/lottie.json" loop autoplay 
+            resizeMode='center' // this fixes lottie padding
+            style={{width: 50}} /> */}
+
+            {dollarsDonated >= goal && (
+              <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[120px] z-20' src="/popper.gif" alt="" width={140} />
+            )} 
 
             <ProgressBar percent={percent} />
 
@@ -35,7 +41,7 @@ function App() {
 
             {dollarsDonated >= goal ? (
                 <p className='mb-6 text-slate-400'>
-                  Thanks for helping us get this project <strong className='text-slate-600'>{percent.toFixed(0)}%</strong> funded! There's still time to donate and keep the momentum up.
+                  Thanks for helping us get this project <strong className='text-slate-600'>{percent.toFixed(0)}%</strong> funded! There's still time to donate and keep the momentum going.
                 </p>
             ) : (
               donations > 0 ? (
