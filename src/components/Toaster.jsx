@@ -38,21 +38,21 @@ export default function Toaster(){
 
   return (
     <div className="fixed z-10 flex flex-col top-0 left-[50%] -translate-x-[50%] p-4 gap-2">
-    <AnimatePresence>
-      {toasts.map((toast, idx )=> (
+      <AnimatePresence>
+        {toasts.map((toast, idx )=> (
 
-        <motion.div 
-          key={`toast-${idx}`}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y:0 }}
-          exit={{ opacity: 0, y:-20 }}
-        >
-          <Toast message={`${toast.message}`} type={toast.type} key={idx}/>    
-        </motion.div> 
-        
-      ))}
-    </AnimatePresence> 
-  </div>
+          <motion.div 
+            key={`toast-${idx}`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y:0 }}
+            exit={{ opacity: 0, y:-20 }}
+          >
+            <Toast message={`${toast.message}`} type={toast.type} key={idx}/>    
+          </motion.div> 
+          
+        ))}
+      </AnimatePresence> 
+    </div>
   )
 
 

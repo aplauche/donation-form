@@ -4,7 +4,6 @@ import Countdown from './components/Countdown';
 import Form from './components/Form';
 import ProgressBar from './components/ProgressBar';
 import Toaster from './components/Toaster';
-import { Player } from '@lottiefiles/react-lottie-player';
 
 
 function App() {
@@ -26,10 +25,6 @@ function App() {
         <section className='max-w-[550px] px-4 py-32'>
 
           <div className='relative border border-slate-200 bg-white rounded-lg p-8 px-12'>
-
-            {/* <Player className='sm:absolute sm:-right-20 top-0 sm:-translate-y-1/2 w-[300px] h-[300px] z-20' src="/lottie.json" loop autoplay 
-            resizeMode='center' // this fixes lottie padding
-            style={{width: 50}} /> */}
 
             {dollarsDonated >= goal && (
               <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[120px] z-20' src="/popper.gif" alt="" width={140} />
