@@ -25,10 +25,10 @@ function App() {
           <div className='relative border border-slate-200 bg-white rounded-lg p-8 px-12'>
 
             {dollarsDonated >= goal && (
-              <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[120px] z-20' src="/popper.gif" alt="celebration" width={140} />
+              <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[115px] z-20' src="/popper.gif" alt="celebration" width={150} />
             )} 
 
-            <ProgressBar percent={percent} />
+            <ProgressBar />
 
             <h1 className='text-3xl font-bold mb-6'>{dollarsDonated >= goal ? "We met our goal!" : "Time is running out to fund this project!"}</h1>
 

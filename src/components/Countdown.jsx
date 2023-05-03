@@ -8,9 +8,6 @@ export default function Countdown({deadline = new Date(new Date().getTime()+(24*
   const [minutes, setMinutes] = useState('--');
   const [seconds, setSeconds] = useState('--');
 
-
-  //const [countdown, setCountdown] = useState()
-
   const calculateTimeRemaining = () => {
     const time = Date.parse(deadline) - Date.now();
 

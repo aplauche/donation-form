@@ -1,10 +1,12 @@
 import useStore from "../../store/useStore"
 
 
-export default function ProgressBar({percent}){
+export default function ProgressBar(){
 
   const goal = useStore((state) => state.goal)
   const dollarsDonated = useStore((state) => state.dollarsDonated)
+  const percent = (dollarsDonated / goal) * 100
+
 
   return (
     <>

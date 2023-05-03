@@ -33,7 +33,6 @@ export default function Form(){
       setDollarInput("5.00")
     } else {
       validate(true)
-      //setDollarInput("5.00")
       inputField.current.focus()
     }
   }
@@ -43,7 +42,7 @@ export default function Form(){
     let timer = null
 
     clearTimeout(timer)
-    timer = setTimeout(validate, 850)
+    timer = setTimeout(validate, 750)
 
     if(dollarInput >= 5){
       setError(false)
@@ -59,57 +58,29 @@ export default function Form(){
   return (
     <>
 
-            <form onSubmit={handleFormSubmit} className="flex items-center flex-wrap pt-4 gap-2 mb-2">
-              <div className='w-100 sm:w-auto flex-grow relative'>
-                <label htmlFor="donate-input" className='sr-only'>Donation Amount ($)</label>
-                <CurrencyInput
-                  id="donate-input"
-                  name="donation"
-                  ref={inputField}
-                  placeholder="$5.00"
-                  prefix="$"
-                  value={dollarInput}
-                  decimalScale={2}
-                  onValueChange={(value) => setDollarInput(value)}
-                  min={5}
-                  className={`${error ? 'focus:outline-strawberry-600' : ''}`}
-                />  
-                {/* {error && (
-                  <div className='absolute w-full -bottom-2 translate-y-full left-[50%] -translate-x-[50%] p-1 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
-                    {error}
-                  </div>
-                )}  */}
-              </div>         
-              <button className='button-primary' type='submit' disabled={error}>
-                Give Now
-              </button>
-            </form> 
-            <div className={`${error ? 'bg-strawberry-100 border-strawberry-600' : 'bg-ocean-100  border-ocean-500 hidden'} border-l-[3px] px-2 py-1`}>
-              Please enter a minimum of $5.00 to make a donation
-            </div>
-
-            {/* {error && (
-              <div className='relative w-full p-1 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
-                {error}
-              </div>
-            )} */}
-
-{/* 
-            {error && (
-              <div className='absolute w-full -bottom-4 translate-y-full left-[50%] -translate-x-[50%] p-2 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>
-                {error}
-              </div>
-            )} */}
-
-
-            {/* <form onSubmit={handleFormSubmit} className="flex items-center py-8 gap-4">
-              <input className='flex-grow border border-neutral-300' type="number" min="5" step="0.01" max="10000" inputmode="numeric" value={dollarInput} onChange={(e) => setDollarInput(e.target.value)}/>
-              <button type='submit'>
-                Give Now
-              </button>
-            </form> */}
-
-    
+      <form onSubmit={handleFormSubmit} className="flex items-center flex-wrap pt-4 gap-2 mb-2">
+        <div className='w-100 sm:w-auto flex-grow relative'>
+          <label htmlFor="donate-input" className='sr-only'>Donation Amount ($)</label>
+          <CurrencyInput
+            id="donate-input"
+            name="donation"
+            ref={inputField}
+            placeholder="$5.00"
+            prefix="$"
+            value={dollarInput}
+            decimalScale={2}
+            onValueChange={(value) => setDollarInput(value)}
+            min={5}
+            className={`${error ? 'focus:outline-strawberry-600' : ''}`}
+          />  
+        </div>         
+        <button className='button-primary order-3 sm:order-2' type='submit' disabled={error}>
+          Give Now
+        </button>
+        <div className={`${error ? 'bg-strawberry-100 border-strawberry-600' : 'hidden'} border-l-[3px] px-2 py-1 w-full order-2 sm:order-3`}>
+          Please enter a minimum of $5.00 to make a donation
+        </div>
+      </form>     
     </>
   )
 }
