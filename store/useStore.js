@@ -8,14 +8,13 @@ const useStore = create((set) => ({
   donate: (amt) => set((state) => ({ 
     dollarsDonated: state.dollarsDonated + amt, 
     donations: state.donations + 1,
-    toasts: [...state.toasts, {type: "success", message: '🎉 Thanks for your donation!'}] 
+    toasts: [...state.toasts, {type: "success", message: '🎉 Thanks for your donation!', id: state.toasts.length}] 
   })),
   dispatchToast: (type, message) => set((state) => ({ 
-    toasts: [...state.toasts, {type, message}] 
+    toasts: [...state.toasts, {type, message, id: state.toasts.length}] 
   })),
-  popToasts: () => set(state => {
-    const updated = Array.from(state.toasts)
-    updated.pop()
+  popToasts: (id) => set(state => {
+    const updated = Array.from(state.toasts).filter(toast => toast.id !== id)
     return { toasts: updated } }
   )
 

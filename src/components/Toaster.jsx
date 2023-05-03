@@ -8,19 +8,7 @@ export default function Toaster(){
   const toasts = useStore((state) => state.toasts)
   const popToasts = useStore((state) => state.popToasts)
 
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-        if (toasts.length) {
-            popToasts()
-        }
-    }, 3000);
-    return () => {
-        clearTimeout(timer);
-    }
-  }, [toasts]);
-
-  const Toast = ({type = "success", message}) => {
+  const Toast = ({type = "success", message, id}) => {
     let typeClass; 
 
     switch(type) {
@@ -31,6 +19,17 @@ export default function Toaster(){
         typeClass = "border-ocean-500"
     }
 
+    useEffect(() => {
+      const timer = setTimeout(() => {
+          if (toasts.length) {
+              popToasts(id)
+          }
+      }, 2000);
+      return () => {
+          clearTimeout(timer);
+      }
+    }, []);
+
     return (
       <div className={`${typeClass} border-l-[3px] py-2 px-4 bg-white`}>{message}</div>
     )
@@ -39,15 +38,15 @@ export default function Toaster(){
   return (
     <div className="fixed z-10 flex flex-col top-0 left-[50%] -translate-x-[50%] p-4 gap-2">
       <AnimatePresence>
-        {toasts.map((toast, idx )=> (
+        {toasts.map((toast )=> (
 
           <motion.div 
-            key={`toast-${idx}`}
+            key={`toast-${toast.id}`}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y:0 }}
             exit={{ opacity: 0, y:-20 }}
           >
-            <Toast message={`${toast.message}`} type={toast.type} key={idx}/>    
+            <Toast message={`${toast.message}`} type={toast.type} id={toast.id} key={toast.id}/>    
           </motion.div> 
           
         ))}

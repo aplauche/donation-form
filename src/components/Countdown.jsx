@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function Countdown({deadline = new Date(new Date().getTime()+(4*24*60*60*1000))}) {
+export default function Countdown({deadline = new Date(new Date().getTime()+(24*60*60*1000))}) {
   const [days, setDays] = useState('--');
   const [hours, setHours] = useState('--');
   const [minutes, setMinutes] = useState('--');

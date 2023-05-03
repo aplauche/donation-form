@@ -72,6 +72,7 @@ export default function Form(){
                   decimalScale={2}
                   onValueChange={(value) => setDollarInput(value)}
                   min={5}
+                  className={`${error ? 'focus:outline-strawberry-600' : ''}`}
                 />  
                 {/* {error && (
                   <div className='absolute w-full -bottom-2 translate-y-full left-[50%] -translate-x-[50%] p-1 px-4 bg-strawberry-200 border-l-2 border-strawberry-600 text-strawberry-600 rounded-sm'>

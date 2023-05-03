@@ -14,20 +14,18 @@ function App() {
 
   const percent = (dollarsDonated / goal) * 100
 
-
-
   return (
     <>
       <main className='min-h-screen w-full bg-slate-100 flex items-center justify-center overflow-x-hidden'>
 
         <Toaster />
 
-        <section className='max-w-[550px] px-4 py-32'>
+        <section className='max-w-[550px] px-4 py-32 isolate'>
 
           <div className='relative border border-slate-200 bg-white rounded-lg p-8 px-12'>
 
             {dollarsDonated >= goal && (
-              <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[120px] z-20' src="/popper.gif" alt="" width={140} />
+              <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[120px] z-20' src="/popper.gif" alt="celebration" width={140} />
             )} 
 
             <ProgressBar percent={percent} />
@@ -48,9 +46,11 @@ function App() {
 
 
             {/* For demo purposes countdown is set to 4 days in the future instead of the actual date - you could instead pass "May 12, 2023" for instance */}
-            <Countdown deadline={new Date(new Date().getTime()+(-1*24*60*60*1000))}/>
+            <Countdown deadline={new Date(new Date().getTime()+(4*24*60*60*1000))}/>
 
             <Form />
+
+            <img className={`-z-10 absolute bottom-0 transition-all duration-1000 w-3/4 left-1/8 ${dollarsDonated >= goal ? 'translate-y-full' : ''}`} src="/flags-plain.svg" alt="" />
 
           </div>
 
