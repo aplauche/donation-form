@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply font-body;
+    @apply font-body text-slate-600;
   }
   h1,h2,h3 {
     @apply font-heading font-bold;
@@ -20,10 +20,10 @@
   }
 
   .button-primary {
-    @apply inline-block rounded-sm p-2 px-4 bg-ocean-500 text-white border border-ocean-500 hover:bg-ocean-600 focus-visible:bg-ocean-600 transition-colors;
+    @apply inline-block rounded-sm p-2 px-4 bg-ocean-500 text-white border border-ocean-500 hover:bg-ocean-600 focus-visible:bg-ocean-700 transition-colors;
 
     &[disabled]{
-      @apply bg-slate-300 border-slate-300 cursor-not-allowed;
+      @apply bg-slate-400 border-slate-400 cursor-not-allowed;
     }
   }
 

@@ -13,10 +13,10 @@ export default function Toaster(){
 
     switch(type) {
       case "error":
-        typeClass = "border-strawberry-600";
+        typeClass = "border-strawberry-600 bg-strawberry-100";
       break;
       default:
-        typeClass = "border-ocean-500"
+        typeClass = "border-ocean-500 bg-ocean-150"
     }
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function Toaster(){
     }, []);
 
     return (
-      <div className={`${typeClass} border-l-[3px] py-2 px-4 bg-white`}>{message}</div>
+      <div className={`${typeClass} border-l-[3px] py-2 px-4 shadow-md`}>{message}</div>
     )
   }
 

@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <main className='min-h-screen w-full bg-slate-100 flex items-center justify-center overflow-x-hidden'>
+      <main className='min-h-screen w-full bg-[#f5f5f5] flex items-center justify-center overflow-x-hidden'>
 
         <Toaster />
 
