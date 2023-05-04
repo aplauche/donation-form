@@ -36,7 +36,7 @@ export default function Toaster(){
   }
 
   return (
-    <div className="fixed z-10 flex flex-col top-0 left-1/2 -translate-x-1/2 p-4 gap-2">
+    <div className="fixed z-10 flex flex-col top-0 left-1/2 -translate-x-1/2 py-4 gap-2">
       <AnimatePresence>
         {toasts.map((toast )=> (
 

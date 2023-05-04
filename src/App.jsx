@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import useStore from '../store/useStore';
 import Countdown from './components/Countdown';
 import Form from './components/Form';
+import FormClosed from './components/FormClosed';
+import Layout from './components/Layout';
 import ProgressBar from './components/ProgressBar';
 import Toaster from './components/Toaster';
 import VanillaForm from './components/VanillaForm';
@@ -12,60 +14,55 @@ function App() {
   const goal = useStore((state) => state.goal)
   const donations = useStore((state) => state.donations)
   const dollarsDonated = useStore((state) => state.dollarsDonated)
+  const timeRemains = useStore((state) => state.timeRemains)
 
   const percent = (dollarsDonated / goal) * 100
 
+  // Hide the entire form once time runs out
+  if(!timeRemains){
+    return <FormClosed />
+  }
+
   return (
-    <>
-      <main className='min-h-screen w-full bg-[#f5f5f5] flex items-center justify-center overflow-x-hidden'>
+    <Layout>
 
-        <Toaster />
+        <div className='relative max-w-[550px] mx-4 my-32 border border-slate-200 bg-white rounded-lg p-8 px-12'>
 
-        <section className='max-w-[550px] px-4 py-32 isolate'>
+          {dollarsDonated >= goal && (
+            <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[115px] z-20' src="/popper.gif" alt="celebration" width={150} />
+          )} 
 
-          <div className='relative border border-slate-200 bg-white rounded-lg p-8 px-12'>
+          <ProgressBar />
 
-            {dollarsDonated >= goal && (
-              <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[115px] z-20' src="/popper.gif" alt="celebration" width={150} />
-            )} 
+          <h1 className='text-3xl font-bold mb-6'>{dollarsDonated >= goal ? "We met our goal!" : "Time is running out to fund this project!"}</h1>
 
-            <ProgressBar />
-
-            <h1 className='text-3xl font-bold mb-6'>{dollarsDonated >= goal ? "We met our goal!" : "Time is running out to fund this project!"}</h1>
-
-            {dollarsDonated >= goal ? (
-                <p className='mb-6 text-slate-400'>
-                  Thanks for helping us get this project <strong className='text-slate-600'>{percent.toFixed(0)}%</strong> funded! There's still time to donate and keep the momentum going.
-                </p>
+          {dollarsDonated >= goal ? (
+              <p className='mb-6 text-slate-400'>
+                Thanks for helping us get this project <strong className='text-slate-600'>{percent.toFixed(0)}%</strong> funded! There's still time to donate and keep the momentum going.
+              </p>
+          ) : (
+            donations > 0 ? (
+              <p className='mb-6 text-slate-400'>Join the <strong className='text-slate-600'>{donations}</strong> other donor{donations > 1 && 's'} who {donations > 1 ? "have" : "has"} already contributed the project.</p>
             ) : (
-              donations > 0 ? (
-                <p className='mb-6 text-slate-400'>Join the <strong className='text-slate-600'>{donations}</strong> other donor{donations > 1 && 's'} who {donations > 1 ? "have" : "has"} already contributed the project.</p>
-              ) : (
-                <p className='mb-6 text-slate-400'>Be the <strong className='text-slate-600'>first</strong> to support the project and get the ball rolling!</p>
-              )
-            )}
+              <p className='mb-6 text-slate-400'>Be the <strong className='text-slate-600'>first</strong> to support the project and get the ball rolling!</p>
+            )
+          )}
 
+          {/* For demo purposes countdown is set to 4 days in the future instead of the actual date - you could instead pass "May 12, 2023" for instance */}
+          <Countdown deadline={new Date(new Date().getTime()+(4*24*60*60*1000))}/>
 
-            {/* For demo purposes countdown is set to 4 days in the future instead of the actual date - you could instead pass "May 12, 2023" for instance */}
-            <Countdown deadline={new Date(new Date().getTime()+(4*24*60*60*1000))}/>
+          {/* 
+          NOTE: I used a 3rd party currency input field that provides some nice functionality - if I needed to do vanilla, this is how I would approach instead:
+          <VanillaForm />
+          */}
+        
+          <Form />
 
-            {/* 
-            NOTE: I used a 3rd party currency input field that provides some nice functionality - if I needed to do vanilla, this is how I would approach instead:
-            <VanillaForm />
-            */}
-          
-            <Form />
+          <img className={`-z-10 absolute bottom-0 transition-all duration-1000 w-3/4 left-1/2 -translate-x-1/2 ${dollarsDonated >= goal ? 'translate-y-full' : ''}`} src="/flags-plain.svg" alt="" />
 
-            <img className={`-z-10 absolute bottom-0 transition-all duration-1000 w-3/4 left-1/8 ${dollarsDonated >= goal ? 'translate-y-full' : ''}`} src="/flags-plain.svg" alt="" />
+        </div>
 
-          </div>
-
-        </section>
-
-      </main>
-
-
-    </>
+    </Layout>
   )
 }
 

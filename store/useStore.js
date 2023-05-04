@@ -5,6 +5,8 @@ const useStore = create((set) => ({
   dollarsDonated: 0,
   donations: 0,
   toasts: [],
+  timeRemains: true,
+  timeOut: () => set(() => ({ timeRemains: false})),
   donate: (amt) => set((state) => ({ 
     dollarsDonated: state.dollarsDonated + amt, 
     donations: state.donations + 1,
