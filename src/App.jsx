@@ -24,7 +24,7 @@ function App() {
   return (
     <Layout>
 
-        <div className='relative max-w-[550px] mx-4 my-32 border border-slate-200 bg-white rounded-lg p-8 px-12'>
+        <div className='relative max-w-[550px] mx-4 my-32 border border-slate-200 bg-white rounded-lg py-8 px-6 sm:px-12'>
 
           {status == 'funded' && (
             <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[115px] z-20' src="/popper.gif" alt="celebration" width={150} />
