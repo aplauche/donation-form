@@ -16,7 +16,7 @@ export default function Toaster(){
         typeClass = "border-strawberry-600 bg-strawberry-100";
       break;
       default:
-        typeClass = "border-ocean-500 bg-ocean-150"
+        typeClass = "border-ocean-500 bg-white"
     }
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function Toaster(){
   }
 
   return (
-    <div className="fixed z-10 flex flex-col top-0 left-[50%] -translate-x-[50%] p-4 gap-2">
+    <div className="fixed z-10 flex flex-col top-0 left-1/2 -translate-x-1/2 p-4 gap-2">
       <AnimatePresence>
         {toasts.map((toast )=> (
 

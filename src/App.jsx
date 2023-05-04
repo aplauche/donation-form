@@ -4,6 +4,7 @@ import Countdown from './components/Countdown';
 import Form from './components/Form';
 import ProgressBar from './components/ProgressBar';
 import Toaster from './components/Toaster';
+import VanillaForm from './components/VanillaForm';
 
 
 function App() {
@@ -48,6 +49,11 @@ function App() {
             {/* For demo purposes countdown is set to 4 days in the future instead of the actual date - you could instead pass "May 12, 2023" for instance */}
             <Countdown deadline={new Date(new Date().getTime()+(4*24*60*60*1000))}/>
 
+            {/* 
+            NOTE: I used a 3rd party currency input field that provides some nice functionality - if I needed to do vanilla, this is how I would approach instead:
+            <VanillaForm />
+            */}
+          
             <Form />
 
             <img className={`-z-10 absolute bottom-0 transition-all duration-1000 w-3/4 left-1/8 ${dollarsDonated >= goal ? 'translate-y-full' : ''}`} src="/flags-plain.svg" alt="" />
