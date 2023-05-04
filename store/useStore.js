@@ -5,12 +5,13 @@ const useStore = create((set) => ({
   dollarsDonated: 0,
   donations: 0,
   toasts: [],
-  timeRemains: true,
-  timeOut: () => set(() => ({ timeRemains: false})),
+  status: 'open',
+  timeOut: () => set(() => ({ status: 'closed'})),
   donate: (amt) => set((state) => ({ 
     dollarsDonated: state.dollarsDonated + amt, 
     donations: state.donations + 1,
-    toasts: [...state.toasts, {type: "success", message: '🎉 Thanks for your donation!', id: Date.now()}] 
+    toasts: [...state.toasts, {type: "success", message: '🎉 Thanks for your donation!', id: Date.now()}],
+    status:  state.dollarsDonated + amt >= state.goal ? 'funded' : 'open'
   })),
   dispatchToast: (type, message) => set((state) => ({ 
     toasts: [...state.toasts, {type, message, id: Date.now()}] 

@@ -27,7 +27,7 @@ export default function Form(){
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
-
+    // submission validation
     if(dollarInput >= 5){
       donate(parseFloat(dollarInput))
       setDollarInput("5.00")
@@ -38,7 +38,7 @@ export default function Form(){
   }
 
   useEffect(() => {
-
+    // real time validation with delay
     let timer = null
 
     clearTimeout(timer)

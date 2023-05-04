@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
 import useStore from '../store/useStore';
 import Countdown from './components/Countdown';
 import Form from './components/Form';
 import FormClosed from './components/FormClosed';
 import Layout from './components/Layout';
 import ProgressBar from './components/ProgressBar';
-import Toaster from './components/Toaster';
 import VanillaForm from './components/VanillaForm';
 
 
@@ -14,12 +12,12 @@ function App() {
   const goal = useStore((state) => state.goal)
   const donations = useStore((state) => state.donations)
   const dollarsDonated = useStore((state) => state.dollarsDonated)
-  const timeRemains = useStore((state) => state.timeRemains)
+  const status = useStore((state) => state.status)
 
   const percent = (dollarsDonated / goal) * 100
 
   // Hide the entire form once time runs out
-  if(!timeRemains){
+  if(status == 'closed'){
     return <FormClosed />
   }
 
@@ -28,15 +26,15 @@ function App() {
 
         <div className='relative max-w-[550px] mx-4 my-32 border border-slate-200 bg-white rounded-lg p-8 px-12'>
 
-          {dollarsDonated >= goal && (
+          {status == 'funded' && (
             <img className='-mt-6 pb-8 sm:mt-0 sm:py-8 sm:absolute -right-8 -top-[115px] z-20' src="/popper.gif" alt="celebration" width={150} />
           )} 
 
           <ProgressBar />
 
-          <h1 className='text-3xl font-bold mb-6'>{dollarsDonated >= goal ? "We met our goal!" : "Time is running out to fund this project!"}</h1>
+          <h1 className='text-3xl font-bold mb-6'>{status == 'funded' ? "We met our goal!" : "Time is running out to fund this project!"}</h1>
 
-          {dollarsDonated >= goal ? (
+          {status == 'funded' ? (
               <p className='mb-6 text-slate-400'>
                 Thanks for helping us get this project <strong className='text-slate-600'>{percent.toFixed(0)}%</strong> funded! There's still time to donate and keep the momentum going.
               </p>
@@ -58,7 +56,7 @@ function App() {
         
           <Form />
 
-          <img className={`-z-10 absolute bottom-0 transition-all duration-1000 w-3/4 left-1/2 -translate-x-1/2 ${dollarsDonated >= goal ? 'translate-y-full' : ''}`} src="/flags-plain.svg" alt="" />
+          <img className={`-z-10 absolute bottom-0 transition-all duration-1000 w-3/4 left-1/2 -translate-x-1/2 ${status == 'funded' ? 'translate-y-full' : ''}`} src="/flags-plain.svg" alt="" />
 
         </div>
 
